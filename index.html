@@ -1,15 +1,43 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Survey PJU — Dashboard</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}header{padding:20px 24px;background:linear-gradient(135deg,#0b3b60,#1976d2);color:#fff}header h1{margin:0;font-size:24px}header p{margin:6px 0 0;font-size:13px;opacity:.92}main{max-width:1750px;margin:auto;padding:16px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar select,.toolbar input,.toolbar button{padding:10px 12px;border:1px solid #d7e0ea;border-radius:9px;background:#fff;font:inherit}.toolbar input{flex:1;min-width:250px}.primary{background:#1565c0!important;color:#fff!important}.status{margin:12px 0;padding:10px 12px;background:#eef5ff;border-radius:9px}.error{background:#fff1f1;border:1px solid #f2b8b8;color:#991b1b}.kpis{display:grid;grid-template-columns:repeat(9,1fr);gap:9px;margin:12px 0}.card,.panel{background:#fff;border:1px solid #e1e7ef;border-radius:12px;box-shadow:0 5px 18px rgba(26,61,94,.05)}.card{padding:12px}.label{font-size:11px;color:#6b7788}.value{font-size:24px;font-weight:800;margin-top:5px}.layout{display:grid;grid-template-columns:1.45fr 1fr;gap:12px}.panel{padding:12px}.panel h3{margin:0 0 10px}.map{height:620px;border-radius:9px;overflow:hidden}.tablewrap{max-height:620px;overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{padding:8px;border-bottom:1px solid #e7ebf0;text-align:left;vertical-align:top}.table th{position:sticky;top:0;background:#f8fafc}.pill{display:inline-block;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:700}.good{background:#e8f5e9;color:#2e7d32}.bad{background:#ffebee;color:#c62828}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin-top:8px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;border:1px solid #fff;box-shadow:0 0 0 1px #bbb}@media(max-width:1200px){.kpis{grid-template-columns:repeat(5,1fr)}.layout{grid-template-columns:1fr}}@media(max-width:650px){main{padding:10px}.kpis{grid-template-columns:repeat(2,1fr)}.map{height:460px}.toolbar input{min-width:100%}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{padding:18px 24px;background:linear-gradient(135deg,#0b3b60,#1976d2);color:#fff}
+header h1{margin:0;font-size:24px} header p{margin:6px 0 0;font-size:13px;opacity:.92}
+main{max-width:1800px;margin:auto;padding:14px 18px 24px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.toolbar select,.toolbar input,.toolbar button{padding:10px 12px;border:1px solid #d7e0ea;border-radius:9px;background:#fff;font:inherit}
+.toolbar input{flex:1;min-width:260px}
+.primary{background:#1565c0!important;color:#fff!important;border-color:#1565c0!important}
+.status{margin:10px 0;padding:9px 12px;background:#eef5ff;border-radius:9px;font-size:13px}
+.error{background:#fff1f1;color:#991b1b;border:1px solid #f2b8b8}
+.kpis{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin:10px 0}
+.card,.panel{background:#fff;border:1px solid #e1e7ef;border-radius:12px;box-shadow:0 5px 18px rgba(26,61,94,.05)}
+.card{padding:11px}.label{font-size:11px;color:#6b7788}.value{font-size:23px;font-weight:800;margin-top:5px}
+.panel{padding:12px;margin-top:12px}.panel h3{margin:0 0 9px}
+.map{height:calc(100vh - 330px);min-height:500px;max-height:760px;border-radius:9px;overflow:hidden}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin-top:8px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;border:1px solid #fff;box-shadow:0 0 0 1px #bbb}
+.tablewrap{max-height:560px;overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}
+.table th,.table td{padding:9px;border-bottom:1px solid #e7ebf0;text-align:left;vertical-align:top}
+.table th{position:sticky;top:0;background:#f8fafc;z-index:1}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:700}
+.good{background:#e8f5e9;color:#2e7d32}.bad{background:#ffebee;color:#c62828}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:700px){header{padding:16px}main{padding:10px}.kpis{grid-template-columns:repeat(2,1fr)}.map{height:52vh;min-height:420px}.toolbar input{min-width:100%}.value{font-size:21px}}
 </style>
 </head>
 <body>
-<header><h1>🚦 SURVEY PJU — BIMA, DOMPU & KOTA BIMA</h1><p>Monitoring PJU, legalitas, IDPEL, kondisi dan lokasi GPS • ULP Sape • Dompu • Woha • Bikot</p></header>
+<header>
+<h1>🚦 SURVEY PJU — BIMA, DOMPU & KOTA BIMA</h1>
+<p>Monitoring PJU, legalitas, IDPEL, kondisi dan lokasi GPS • ULP Sape • Dompu • Woha • Bikot</p>
+</header>
 <main>
 <div class="toolbar">
 <select id="ulp"><option value="">Semua ULP</option><option>ULP Sape</option><option>ULP Dompu</option><option>ULP Woha</option><option>ULP Bikot</option></select>
@@ -19,36 +47,49 @@
 <input id="q" placeholder="Cari ID / IDPEL / nomor tiang / desa / kecamatan / alamat">
 <button id="refresh" class="primary">↻ Refresh</button><button id="csv">⇩ Export CSV</button>
 </div>
-<div id="status" class="status">Memuat data terbaru dari Google Sheets…</div>
+<div id="status" class="status">Mengambil data terbaru dari Google Sheets…</div>
 <div id="kpis" class="kpis"></div>
-<div class="layout">
-<section class="panel"><h3>📍 Peta Lokasi Survey PJU</h3><div id="map" class="map"></div><div class="legend"><span><i class="dot" style="background:#c62828"></i>ILEGAL</span><span><i class="dot" style="background:#1565c0"></i>Sape</span><span><i class="dot" style="background:#6a1b9a"></i>Dompu</span><span><i class="dot" style="background:#2e7d32"></i>Woha</span><span><i class="dot" style="background:#ef6c00"></i>Bikot / Bima Kota</span></div></section>
-<section class="panel"><h3>🧾 Data Survey Terbaru</h3><div class="tablewrap"><table class="table"><thead><tr><th>ID / IDPEL</th><th>ULP</th><th>Kabupaten/Kota</th><th>Lokasi</th><th>Legalitas</th><th>Kondisi</th></tr></thead><tbody id="tbody"><tr><td colspan="6">Memuat…</td></tr></tbody></table></div></section>
+
+<section class="panel">
+<h3>📍 Peta Lokasi Survey PJU</h3>
+<div id="map" class="map"></div>
+<div class="legend">
+<span><i class="dot" style="background:#c62828"></i>ILEGAL</span>
+<span><i class="dot" style="background:#1565c0"></i>ULP Sape</span>
+<span><i class="dot" style="background:#6a1b9a"></i>ULP Dompu</span>
+<span><i class="dot" style="background:#2e7d32"></i>ULP Woha</span>
+<span><i class="dot" style="background:#ef6c00"></i>ULP Bikot</span>
 </div>
+</section>
+
+<section class="panel">
+<h3>🧾 Data Survey Terbaru</h3>
+<div class="tablewrap">
+<table class="table"><thead><tr><th>ID / IDPEL</th><th>ULP</th><th>Kabupaten/Kota</th><th>Lokasi</th><th>Legalitas</th><th>Kondisi</th></tr></thead>
+<tbody id="tbody"><tr><td colspan="6">Memuat…</td></tr></tbody></table>
+</div>
+</section>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const CFG={id:'1IhB-agDYb7WcVSnZioHRWYE9Hm2iQLsJdA72E9jlXWY',sheet:'PJU_Survey'};
-let DATA=[],FILTERED=[];
+let H=[],DATA=[],FILTERED=[];
 const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-const canonSpace=s=>String(s??'').trim().replace(/\s+/g,' ');
-function canonULP(s){const x=canonSpace(s).toLowerCase();if(x==='ulp bima kota'||x==='bima kota'||x==='ulp bikot'||x==='bikot')return'ULP Bikot';if(x==='ulp sape'||x==='sape')return'ULP Sape';if(x==='ulp dompu'||x==='dompu')return'ULP Dompu';if(x==='ulp woha'||x==='woha')return'ULP Woha';return canonSpace(s)}
-function canonKab(s){const x=canonSpace(s).toLowerCase().replace(/\./g,'');if(x==='kabupaten bima'||x==='kab bima'||x==='bima')return'Kabupaten Bima';if(x==='kabupaten dompu'||x==='kab dompu'||x==='dompu')return'Kabupaten Dompu';if(x==='kota bima'||x==='bima kota')return'Kota Bima';return canonSpace(s)}
-function parseGPS(s){const p=canonSpace(s).replace(';',',').split(',').map(v=>parseFloat(v));return p.length>=2&&Number.isFinite(p[0])&&Number.isFinite(p[1])?[p[0],p[1]]:null}
-function fromRows(d){
-  const rows=d.table.rows||[];
-  return rows.map(r=>{const c=r.c||[];const v=i=>c[i]?.v??'';return{
-    id:canonSpace(v(0)),timestamp:canonSpace(v(1)),email:canonSpace(v(2)),petugas:canonSpace(v(3)),ulp:canonULP(v(4)),wilayah:canonSpace(v(5)),legal:canonSpace(v(6)).toUpperCase(),idpel:canonSpace(v(7)),kab:canonKab(v(8)),kec:canonSpace(v(9)),desa:canonSpace(v(10)),alamat:canonSpace(v(11)),gps:canonSpace(v(12)),tiang:canonSpace(v(13)),kondisiTiang:canonSpace(v(14)),jenisLampu:canonSpace(v(15)),daya:canonSpace(v(16)),lampu:canonSpace(v(17)),kondisiLampu:canonSpace(v(18)),panel:canonSpace(v(19)),jaringan:canonSpace(v(20)),tindakan:canonSpace(v(21)),prioritas:canonSpace(v(22)),fotoPJU:canonSpace(v(23)),fotoMeter:canonSpace(v(24)),fotoLokasi:canonSpace(v(25)),catatan:canonSpace(v(26))
-  }}).filter(r=>r.id!=='');
-}
-function filtered(){const u=$('ulp').value,k=$('kab').value,l=$('legal').value,c=$('kondisi').value.toLowerCase(),q=$('q').value.toLowerCase().trim();return DATA.filter(r=>(!u||canonULP(r.ulp)===u)&&(!k||canonKab(r.kab)===k)&&(!l||r.legal===l)&&(!c||r.kondisiTiang.toLowerCase()===c)&&(!q||[r.id,r.idpel,r.tiang,r.desa,r.kec,r.alamat].join(' ').toLowerCase().includes(q)))}
-function draw(){FILTERED=filtered();const le=FILTERED.filter(r=>r.legal==='LEGAL').length,il=FILTERED.filter(r=>r.legal==='ILEGAL').length,ni=FILTERED.filter(r=>r.legal==='LEGAL'&&!r.idpel).length,bad=FILTERED.filter(r=>['rusak ringan','rusak berat','hilang','perlu pemeriksaan'].includes(r.kondisiTiang.toLowerCase())).length;const cards=[['Total PJU',FILTERED.length],['LEGAL',le],['ILEGAL',il],['Legal Tanpa IDPEL',ni],['ULP Sape',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Sape').length],['ULP Dompu',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Dompu').length],['ULP Woha',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Woha').length],['ULP Bikot',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Bikot').length],['Perlu Penanganan',bad]];$('kpis').innerHTML=cards.map(c=>`<div class="card"><div class="label">${c[0]}</div><div class="value">${c[1].toLocaleString('id-ID')}</div></div>`).join('');$('tbody').innerHTML=FILTERED.slice().reverse().slice(0,500).map(r=>`<tr><td><b>${esc(r.id)}</b><br><small>IDPEL: ${esc(r.idpel)||'-'}<br>${esc(r.timestamp)}</small></td><td>${esc(canonULP(r.ulp))||'-'}</td><td>${esc(canonKab(r.kab))||'-'}</td><td>${esc([r.desa,r.kec].filter(Boolean).join(', '))||'-'}<br><small>${esc(r.alamat)}</small></td><td><span class="pill ${r.legal==='LEGAL'?'good':'bad'}">${esc(r.legal)||'-'}</span></td><td>${esc(r.kondisiTiang)||'-'}</td></tr>`).join('')||'<tr><td colspan="6">Tidak ada data.</td></tr>';plot();$('status').textContent=`Menampilkan ${FILTERED.length.toLocaleString('id-ID')} data dari ${DATA.length.toLocaleString('id-ID')} data survey.`}
-function plot(){markers.clearLayers();const b=[];FILTERED.forEach(r=>{const p=parseGPS(r.gps);if(!p)return;const l=r.legal,u=canonULP(r.ulp);const m=L.circleMarker(p,{radius:7,weight:2,color:'#fff',fillColor:l==='ILEGAL'?'#c62828':u==='ULP Bikot'?'#ef6c00':u==='ULP Dompu'?'#6a1b9a':u==='ULP Woha'?'#2e7d32':'#1565c0',fillOpacity:.95});m.bindPopup(`<b>${esc(r.id)}</b><br>IDPEL: ${esc(r.idpel)||'-'}<br>ULP: ${esc(u)||'-'}<br>Kab/Kota: ${esc(r.kab)||'-'}<br>Legalitas: ${esc(r.legal)||'-'}<br>GPS: ${esc(r.gps)}<br>${esc(r.desa)}, ${esc(r.kec)}<br>${esc(r.alamat)}`);m.addTo(markers);b.push(p)});if(b.length)map.fitBounds(b,{padding:[15,15],maxZoom:15})}
-function parseGViz(t){const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<0)throw Error('Respons Google Sheets bukan JSON GViz');return JSON.parse(t.slice(a,b+1))}
-async function load(){const btn=$('refresh');btn.disabled=true;$('status').textContent='Mengambil data terbaru dari Google Sheets…';try{const tq='select * where A is not null';const url=`https://docs.google.com/spreadsheets/d/${CFG.id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CFG.sheet)}&tq=${encodeURIComponent(tq)}&_=${Date.now()}`;const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const text=await res.text();const d=parseGViz(text);DATA=fromRows(d);if(!DATA.length)throw Error('Google Sheets terbaca, tetapi tidak ada baris survey dengan ID Survey.');draw()}catch(e){$('status').className='status error';$('status').innerHTML=`Gagal membaca data: ${esc(e.message)}<br><small>Pastikan spreadsheet dapat dibaca publik oleh dashboard.</small>`;$('tbody').innerHTML='<tr><td colspan="6">Data tidak tersedia.</td></tr>';$('kpis').innerHTML='';markers.clearLayers()}finally{btn.disabled=false}}
-function downloadCSV(){const headers=['ID Survey','Timestamp','Email Petugas','Nama Petugas','ULP','Wilayah','Status Legalitas','IDPEL','Kabupaten/Kota','Kecamatan','Desa/Kelurahan','Alamat','Lokasi GPS','Nomor Tiang','Kondisi Tiang','Jenis Lampu','Daya (W)','Lampu Menyala','Kondisi Lampu','Kondisi Panel/Meter','Kondisi Jaringan','Perlu Tindakan','Prioritas','Foto PJU','Foto Meter','Foto Lokasi','Catatan'];const rows=FILTERED.map(r=>[r.id,r.timestamp,r.email,r.petugas,r.ulp,r.wilayah,r.legal,r.idpel,r.kab,r.kec,r.desa,r.alamat,r.gps,r.tiang,r.kondisiTiang,r.jenisLampu,r.daya,r.lampu,r.kondisiLampu,r.panel,r.jaringan,r.tindakan,r.prioritas,r.fotoPJU,r.fotoMeter,r.fotoLokasi,r.catatan]);const csv=[headers,...rows].map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='survey_pju_export.csv';a.click()}
+const clean=s=>String(s??'').trim().replace(/\s+/g,' ');
+const lower=s=>clean(s).toLowerCase();
+function canonULP(s){const x=lower(s);if(['ulp bima kota','bima kota','ulp bikot','bikot'].includes(x))return'ULP Bikot';if(['ulp sape','sape'].includes(x))return'ULP Sape';if(['ulp dompu','dompu'].includes(x))return'ULP Dompu';if(['ulp woha','woha'].includes(x))return'ULP Woha';return clean(s)}
+function canonKab(s){const x=lower(s).replace(/\./g,'');if(['kabupaten bima','kab bima','bima'].includes(x))return'Kabupaten Bima';if(['kabupaten dompu','kab dompu','dompu'].includes(x))return'Kabupaten Dompu';if(['kota bima','bima kota'].includes(x))return'Kota Bima';return clean(s)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function parseGPS(s){const p=clean(s).replace(';',',').split(',').map(v=>parseFloat(v));return p.length>=2&&Number.isFinite(p[0])&&Number.isFinite(p[1])?[p[0],p[1]]:null}
+function fromGViz(d){const rows=d.table?.rows||[];return rows.map(r=>{const c=r.c||[];const v=i=>c[i]?.v??'';return{id:clean(v(0)),timestamp:clean(v(1)),email:clean(v(2)),petugas:clean(v(3)),ulp:canonULP(v(4)),wilayah:clean(v(5)),legal:clean(v(6)).toUpperCase(),idpel:clean(v(7)),kab:canonKab(v(8)),kec:clean(v(9)),desa:clean(v(10)),alamat:clean(v(11)),gps:clean(v(12)),tiang:clean(v(13)),kondisi:clean(v(14)),jenisLampu:clean(v(15)),daya:clean(v(16)),lampu:clean(v(17)),kondisiLampu:clean(v(18)),panel:clean(v(19)),jaringan:clean(v(20)),tindakan:clean(v(21)),prioritas:clean(v(22)),fotoPJU:clean(v(23)),fotoMeter:clean(v(24)),fotoLokasi:clean(v(25)),catatan:clean(v(26))}}).filter(r=>r.id)}
+function filtered(){const u=$('ulp').value,k=$('kab').value,l=$('legal').value,c=lower($('kondisi').value),q=lower($('q').value);return DATA.filter(r=>(!u||canonULP(r.ulp)===u)&&(!k||canonKab(r.kab)===k)&&(!l||r.legal===l)&&(!c||lower(r.kondisi)===c)&&(!q||[r.id,r.idpel,r.tiang,r.desa,r.kec,r.alamat].join(' ').toLowerCase().includes(q)))}
+function draw(){FILTERED=filtered();const le=FILTERED.filter(r=>r.legal==='LEGAL').length,il=FILTERED.filter(r=>r.legal==='ILEGAL').length,ni=FILTERED.filter(r=>r.legal==='LEGAL'&&!r.idpel).length,bad=FILTERED.filter(r=>['rusak ringan','rusak berat','hilang','perlu pemeriksaan'].includes(lower(r.kondisi))).length;const cards=[['Total PJU',FILTERED.length],['LEGAL',le],['ILEGAL',il],['Legal Tanpa IDPEL',ni],['ULP Sape',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Sape').length],['ULP Dompu',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Dompu').length],['ULP Woha',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Woha').length],['ULP Bikot',FILTERED.filter(r=>canonULP(r.ulp)==='ULP Bikot').length],['Perlu Penanganan',bad]];$('kpis').innerHTML=cards.map(c=>`<div class="card"><div class="label">${c[0]}</div><div class="value">${c[1].toLocaleString('id-ID')}</div></div>`).join('');$('tbody').innerHTML=FILTERED.slice().reverse().slice(0,500).map(r=>`<tr><td><b>${esc(r.id)}</b><br><small>IDPEL: ${esc(r.idpel)||'-'}<br>${esc(r.timestamp)}</small></td><td>${esc(canonULP(r.ulp))||'-'}</td><td>${esc(canonKab(r.kab))||'-'}</td><td>${esc([r.desa,r.kec].filter(Boolean).join(', '))||'-'}<br><small>${esc(r.alamat)}</small></td><td><span class="pill ${r.legal==='LEGAL'?'good':'bad'}">${esc(r.legal)||'-'}</span></td><td>${esc(r.kondisi)||'-'}</td></tr>`).join('')||'<tr><td colspan="6">Tidak ada data.</td></tr>';plot();$('status').className='status';$('status').textContent=`Menampilkan ${FILTERED.length.toLocaleString('id-ID')} data dari ${DATA.length.toLocaleString('id-ID')} data survey.`}
+function plot(){markers.clearLayers();const b=[];FILTERED.forEach(r=>{const p=parseGPS(r.gps);if(!p)return;const u=canonULP(r.ulp),l=r.legal;const col=l==='ILEGAL'?'#c62828':u==='ULP Bikot'?'#ef6c00':u==='ULP Dompu'?'#6a1b9a':u==='ULP Woha'?'#2e7d32':'#1565c0';const m=L.circleMarker(p,{radius:7,weight:2,color:'#fff',fillColor:col,fillOpacity:.95});m.bindPopup(`<b>${esc(r.id)}</b><br>IDPEL: ${esc(r.idpel)||'-'}<br>ULP: ${esc(u)||'-'}<br>Kabupaten/Kota: ${esc(canonKab(r.kab))||'-'}<br>Legalitas: ${esc(r.legal)||'-'}<br>Kondisi: ${esc(r.kondisi)||'-'}<br>GPS: ${p[0]}, ${p[1]}<br>${esc(r.desa)}, ${esc(r.kec)}<br>${esc(r.alamat)}`);m.addTo(markers);b.push(p)});if(b.length)map.fitBounds(b,{padding:[18,18],maxZoom:15})}
+function parse(t){const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<0)throw Error('Respons Google Sheets tidak valid');return JSON.parse(t.slice(a,b+1))}
+async function load(){const btn=$('refresh');btn.disabled=true;$('status').className='status';$('status').textContent='Mengambil data terbaru dari Google Sheets…';try{const tq='select * where A is not null';const url=`https://docs.google.com/spreadsheets/d/${CFG.id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CFG.sheet)}&tq=${encodeURIComponent(tq)}&_=${Date.now()}`;const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const d=parse(await res.text());H=d.table.cols.map(c=>c.label||'');DATA=fromGViz(d);if(!DATA.length)throw Error('Tidak ada data survey dengan ID Survey.');draw()}catch(e){$('status').className='status error';$('status').textContent='Gagal membaca data: '+e.message;$('tbody').innerHTML='<tr><td colspan="6">Data tidak tersedia.</td></tr>';$('kpis').innerHTML='';markers.clearLayers()}finally{btn.disabled=false}}
+function downloadCSV(){const headers=['ID Survey','Timestamp','Email Petugas','Nama Petugas','ULP','Wilayah','Status Legalitas','IDPEL','Kabupaten/Kota','Kecamatan','Desa/Kelurahan','Alamat','Lokasi GPS','Nomor Tiang','Kondisi Tiang','Jenis Lampu','Daya (W)','Lampu Menyala','Kondisi Lampu','Kondisi Panel/Meter','Kondisi Jaringan','Perlu Tindakan','Prioritas','Foto PJU','Foto Meter','Foto Lokasi','Catatan'];const rows=FILTERED.map(r=>[r.id,r.timestamp,r.email,r.petugas,r.ulp,r.wilayah,r.legal,r.idpel,r.kab,r.kec,r.desa,r.alamat,r.gps,r.tiang,r.kondisi,r.jenisLampu,r.daya,r.lampu,r.kondisiLampu,r.panel,r.jaringan,r.tindakan,r.prioritas,r.fotoPJU,r.fotoMeter,r.fotoLokasi,r.catatan]);const csv=[headers,...rows].map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='survey_pju_export.csv';a.click()}
 const map=L.map('map').setView([-8.55,118.62],9);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:20,attribution:'© OpenStreetMap contributors'}).addTo(map);const markers=L.layerGroup().addTo(map);
 $('refresh').onclick=load;$('csv').onclick=downloadCSV;['ulp','kab','legal','kondisi'].forEach(id=>$(id).addEventListener('change',draw));$('q').addEventListener('input',draw);load();
 </script>
-</body></html>
+</body>
+</html>
